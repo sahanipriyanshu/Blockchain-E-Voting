@@ -4,7 +4,7 @@ import axios from 'axios';
 export const AuthContext = createContext();
 
 // Use proxy in development, full URL in production
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5002/api');
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'https://blockchain-e-voting-wddd.onrender.com/api');
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

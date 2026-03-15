@@ -2,11 +2,12 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import User from '../models/User.js';
 import Election from '../models/Election.js';
-import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://hvinprimary_db_user:1jOVcDjothOkPv2E@cluster0.qbtyp1o.mongodb.net/evoting?appName=Cluster0';
+const MONGO_URI =
+  process.env.MONGO_URI ||
+  'mongodb+srv://hvinprimary_db_user:1jOVcDjothOkPv2E@cluster0.qbtyp1o.mongodb.net/evoting?appName=Cluster0';
 
 const createSampleData = async () => {
   try {
@@ -15,27 +16,23 @@ const createSampleData = async () => {
     console.log('MongoDB connected');
 
     // Create or update admin user
-    const adminEmail = 'hvinprimary@gmail.com';
+    const adminEmail = 'sahanipriyanshu19@gmail.com';
     const adminPassword = '123456';
 
     let admin = await User.findOne({ email: adminEmail });
-    
+
     if (!admin) {
-      // Create admin user
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(adminPassword, salt);
-      
+      // Create admin user (password hashing handled by User model pre-save hook)
       admin = await User.create({
         name: 'Admin User',
         email: adminEmail,
-        password: hashedPassword,
+        password: adminPassword,
         role: 'admin',
       });
       console.log('Admin user created:', admin.email);
     } else {
-      // Update password if user exists
-      const salt = await bcrypt.genSalt(10);
-      admin.password = await bcrypt.hash(adminPassword, salt);
+      // Update password if user exists (pre-save hook will hash)
+      admin.password = adminPassword;
       admin.role = 'admin';
       await admin.save();
       console.log('Admin user updated:', admin.email);

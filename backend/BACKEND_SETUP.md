@@ -83,10 +83,10 @@ node scripts/createSampleData.js
 
 **Default accounts after running the script:**
 
-| Role   | Email                   | Password |
-|--------|-------------------------|----------|
-| Admin  | hvinprimary@gmail.com   | 123456   |
-| Voter  | voter@test.com          | 123456   |
+| Role   | Email                        | Password |
+|--------|------------------------------|----------|
+| Admin  | sahanipriyanshu19@gmail.com  | 123456   |
+| Voter  | voter@test.com               | 123456   |
 
 ---
 

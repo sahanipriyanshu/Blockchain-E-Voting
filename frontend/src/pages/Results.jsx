@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { TrendingUp, Vote, Calendar, CheckCircle, Users, Hash, Shield } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5002/api');
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'https://blockchain-e-voting-wddd.onrender.com/api');
 
 const Results = () => {
   const { user } = useContext(AuthContext);

@@ -39,7 +39,7 @@ node scripts/createSampleData.js
 ```
 
 This creates:
-- **Admin:** `hvinprimary@gmail.com` / `123456`
+- **Admin:** `sahanipriyanshu19@gmail.com` / `123456`
 - **Voter:** `voter@test.com` / `123456`
 - A sample election
 

@@ -63,7 +63,9 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">{user.name}</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                      {user.role === 'admin' ? 'Admin' : user.name}
+                    </span>
                   </div>
                   <button
                     onClick={handleLogout}
@@ -146,7 +148,9 @@ const Navbar = () => {
                 <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center space-x-2 mb-2">
                     <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">{user.name}</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                      {user.role === 'admin' ? 'Admin' : user.name}
+                    </span>
                   </div>
                   <button
                     onClick={() => {
