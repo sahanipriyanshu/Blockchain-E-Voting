@@ -1,0 +1,33 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: evoting-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: PORT
+        value: 5002
+
+  # Frontend Static Site
+  - type: web
+    name: evoting-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: evoting-backend
+          envVarKey: RENDER_EXTERNAL_URL
+        # This will append '/api' to the backend URL dynamically
+        # VITE_API_URL will end up being something like: https://evoting-backend-1234.onrender.com/api
+        # Wait, fromService doesn't allow string manipulation. Better to use a sync: false env var for explicit value if needed, 
+        # or just set up the backend first and provide the URL.
+        # Removing VITE_API_URL here as Render Static Sites resolve at build time. 
+        # You will need to set it manually in the Render dashboard after backend is deployed.
