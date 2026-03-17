@@ -96,22 +96,32 @@ const Home = () => {
         </motion.div>
 
         {/* How It Works */}
-        <motion.div variants={itemVariants} className="glass-card-strong pb-12 pt-10 px-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-10 dark:opacity-20"></div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-slate-900 dark:text-white">How It Works</h2>
+        <motion.div variants={itemVariants} className="glass-card-strong pb-16 pt-12 px-8 relative overflow-hidden mt-12 mb-12">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 dark:opacity-20 animate-pulse-slow"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/20 rounded-full mix-blend-screen filter blur-[120px] opacity-30 dark:opacity-20 animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+          
+          <div className="relative z-10 text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white tracking-tight">How It Works</h2>
+            <p className="text-lg text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto">A seamless and secure journey from registration to result tracking.</p>
+          </div>
+          
           <div className="grid md:grid-cols-4 gap-8 relative z-10">
+            {/* Connecting Line for Desktop */}
+            <div className="hidden md:block absolute top-[2.5rem] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-blue-500/0 via-indigo-500/50 to-purple-500/0 z-[-1]"></div>
+            
             {[
               { step: 1, title: "Register", desc: "Create your account and securely verify your identity." },
               { step: 2, title: "Review", desc: "Browse active elections and research the candidates." },
               { step: 3, title: "Vote", desc: "Cast your encrypted vote directly onto the blockchain." },
               { step: 4, title: "Verify", desc: "View the transparent, immutable election results live." }
             ].map((item, idx) => (
-              <motion.div key={idx} variants={itemVariants} className="text-center flex flex-col items-center h-full group">
-                <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:border-blue-500/50 transition-colors duration-300">
-                  <span className="text-xl font-bold gradient-text">{item.step}</span>
+              <motion.div key={idx} variants={itemVariants} className="text-center flex flex-col items-center h-full group relative">
+                <div className="relative w-20 h-20 rounded-full bg-white dark:bg-zinc-900 border-2 border-slate-200 dark:border-zinc-800 flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:border-indigo-500 transition-all duration-300 z-10 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="text-2xl font-bold gradient-text">{item.step}</span>
                 </div>
-                <h4 className="font-semibold text-lg mb-2 text-slate-900 dark:text-white">{item.title}</h4>
-                <p className="text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">{item.desc}</p>
+                <h4 className="font-bold text-xl mb-3 text-slate-900 dark:text-white transition-colors duration-300 group-hover:text-indigo-400">{item.title}</h4>
+                <p className="text-slate-600 dark:text-zinc-400 leading-relaxed max-w-[200px] mx-auto">{item.desc}</p>
               </motion.div>
             ))}
           </div>
