@@ -10,10 +10,14 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50; /* Light mode default */
+    @apply bg-slate-50 text-slate-800;
+    background-image: radial-gradient(circle at top right, rgba(238, 242, 255, 1) 0%, rgba(248, 250, 252, 0) 60%),
+                      radial-gradient(circle at bottom left, rgba(224, 231, 255, 1) 0%, rgba(248, 250, 252, 0) 60%);
   }
   .dark body {
-    @apply bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-950; /* Dark mode */
+    @apply bg-zinc-950 text-white;
+    background-image: radial-gradient(circle at top right, rgba(30, 27, 75, 0.4) 0%, rgba(9, 9, 11, 0) 60%),
+                      radial-gradient(circle at bottom left, rgba(17, 24, 39, 0.5) 0%, rgba(9, 9, 11, 0) 60%);
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight;
@@ -30,17 +34,17 @@
 
 @layer components {
   .glass-card {
-    @apply backdrop-blur-xl rounded-2xl border p-6 transition-all duration-300;
-    background: rgba(255, 255, 255, 0.5);
+    @apply backdrop-blur-2xl rounded-2xl border p-6 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.4);
     border-color: rgba(255, 255, 255, 0.6);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2);
     color: rgb(17, 24, 39); /* Default text color for light mode */
   }
   .dark .glass-card {
-    background: rgba(30, 41, 59, 0.95);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
-    color: rgb(241, 245, 249); /* Default text color for dark mode */
+    background: rgba(18, 18, 27, 0.4);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    color: rgb(241, 245, 249); 
   }
   .glass-card:hover {
     @apply transition-all duration-300;
@@ -51,11 +55,10 @@
     filter: brightness(1.05);
   }
   .dark .glass-card:hover {
-    background: rgba(30, 41, 59, 1);
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 20px 60px 0 rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.2), 0 0 40px rgba(96, 165, 250, 0.3);
-    transform: translateY(-4px) scale(1.02);
-    filter: brightness(1.15);
+    background: rgba(18, 18, 27, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 60px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 0 40px rgba(96, 165, 250, 0.15);
+    transform: translateY(-4px);
   }
 
   .glass-card-strong {
@@ -73,44 +76,58 @@
   }
 
   .btn-primary {
-    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300;
-    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 relative overflow-hidden;
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
-    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+  }
+  .btn-primary:hover::after {
+    opacity: 1;
   }
   .dark .btn-primary {
-    background: linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #a78bfa 100%);
-    box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
   }
   .dark .btn-primary:hover {
-    box-shadow: 0 8px 25px rgba(96, 165, 250, 0.6);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
   }
 
   .btn-secondary {
     @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     color: rgb(17, 24, 39);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
   }
   .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.8);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   }
   .dark .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
     color: rgb(241, 245, 249);
   }
   .dark .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   .input-field {
@@ -137,25 +154,25 @@
   }
 
   .glass-navbar {
-    @apply backdrop-blur-xl border-b transition-all duration-300;
-    background: rgba(255, 255, 255, 0.7);
+    @apply backdrop-blur-2xl border-b transition-all duration-300;
+    background: rgba(255, 255, 255, 0.6);
     border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 20px rgba(31, 38, 135, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
   }
   .dark .glass-navbar {
-    background: rgba(30, 41, 59, 0.9);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(9, 9, 11, 0.6);
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
 
   .gradient-text {
     @apply bg-clip-text text-transparent font-bold;
-    background-image: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    background-image: linear-gradient(to right, #2563eb, #6366f1);
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
   .dark .gradient-text {
-    background-image: linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #a78bfa 100%);
+    background-image: linear-gradient(to right, #60a5fa, #818cf8, #a78bfa);
   }
 
   .glass-table {
