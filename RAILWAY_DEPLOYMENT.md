@@ -1,33 +1,29 @@
 # Railway Deployment Guide
 
-This project is configured to be easily deployed to [Railway](https://railway.app/). We have set up a `railway.json` configuration file so that Railway understands how to build and run the backend.
+This project is a monorepo containing both a `frontend` and a `backend` application. To deploy them successfully to [Railway](https://railway.app/), you must configure **two separate services** and set their **Root Directory** appropriately so Railway installs Node.js correctly.
 
 ## 1. Deploying the Backend
-The backend can be deployed easily with our configuration.
 
-1. Push your code with `railway.json` to your GitHub repository.
-2. Log in to [Railway](https://railway.app/).
-3. Click **New Project** > **Deploy from GitHub repo**.
-4. Select the `blockchain_eVoting` repository.
-5. Railway will automatically detect the `railway.json` file in the root, which tells it to look in the `backend` folder and run `npm start`.
-6. Once the service is created, go to the service settings on Railway, navigate to the **Variables** tab, and add your required environment variables:
+1. Push your code to your GitHub repository.
+2. Log in to [Railway](https://railway.app/) and create a **New Project** > **Deploy from GitHub repo**.
+3. Select the `blockchain_eVoting` repository.
+4. **CRITICAL STEP**: Before the build finishes (or if it fails), go to the new service's **Settings** > **General** > **Root Directory** and type `/backend`.
+5. Remove any custom "Build Command" or "Start Command" if you typed one in. Railway will automatically detect the `package.json` in the `/backend` folder and run `npm start`.
+6. Go to the **Variables** tab and add your required environment variables:
    - `MONGO_URI`: Your MongoDB connection string.
-   - `PORT`: You can leave this out, Railway assigns a port automatically.
-7. Go to the **Settings** tab > **Networking** section, and click **Generate Domain** to get your public backend URL (e.g., `https://backend-production-abcd.up.railway.app`).
+   - `PORT`: (Optional) Railway assigns a port automatically.
+7. Go to the **Settings** tab > **Networking** section, and click **Generate Domain** to get your public backend URL.
 
 ## 2. Deploying the Frontend
-For React + Vite applications, **Netlify** or **Vercel** are generally better and faster, but you can also deploy the frontend on Railway as a Static Site.
 
 1. On your Railway project dashboard, click **New** > **GitHub Repo**.
-2. Select the *same* `blockchain_eVoting` repository again. This will add a second service to the project.
-3. Before it builds, go to **Settings** of this new service.
-4. Set the **Root Directory** to `/frontend`.
-5. Set the **Build Command** to `npm run build` and **Start Command** to `npm run preview` or simply configure it as a static deployment if using a generic static buildpack.
-6. In the **Variables** tab for the frontend, add:
+2. Select the *same* `blockchain_eVoting` repository again. This adds a second service.
+3. **CRITICAL STEP**: Go to this new service's **Settings** > **General** > **Root Directory** and type `/frontend`.
+4. Remove any custom "Build Command" or "Start Command". Railway will now detect the Vite `package.json` in the `/frontend` folder, automatically run `npm run build`, and serve the static files or use `npm run preview`.
+5. In the **Variables** tab, add:
    - `VITE_API_URL`: Your backend URL generated in Step 1 (e.g., `https://backend-production-abcd.up.railway.app/api`).
-7. Once deployed, generate a domain in **Settings** > **Networking**. 
+6. Once deployed, generate a domain in **Settings** > **Networking**.
 
 ---
-**Troubleshooting Check:**
-- Make sure `MONGO_URI` in Railway connects successfully to MongoDB Atlas by keeping your Network Access in Atlas open (`0.0.0.0/0`) during deployment since Railway uses dynamic IPs.
-- If using Netlify for the frontend instead (recommended), set `VITE_API_URL` to the new Railway backend URL in the Netlify dashboard Environment Variables settings!
+**Fixing "npm: command not found" Errors:**
+If you see the error `npm: command not found` or `"npm install" did not complete successfully: exit code: 127` in your deployment logs, it means Railway did not detect Node.js. This happens if you forgot to set the **Root Directory** to `/frontend` or `/backend`. Always set the Root Directory first so Railway knows where to find your `package.json`!
